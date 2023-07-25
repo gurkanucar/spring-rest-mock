@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
+    <title>BezKoder - Spring Boot Thymeleaf example</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+    <div class="container mt-4">
+        <table class="table table-bordered table-hover table-responsive-xl">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Path</th>
+<!--                <th>Created</th>-->
+                <th>Response Type</th>
+                <th>HTTP Method</th>
+                <th>Success Status</th>
+                <th>Failure Status</th>
+<!--                <th>Success Response</th>-->
+<!--                <th>Failure Response</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:if="${not #lists.isEmpty(mockDataList)}">
+                <tr th:each="mockData : ${mockDataList}">
+                    <td th:text="${mockData.id}" style="font-weight: bold; text-align: center; color: #007bff;"></td>
+                    <td th:text="${mockData.path}"></td>
+<!--                    <td th:text="${mockData.created}" style="font-style: italic;"></td>-->
+                    <td th:text="${mockData.responseType}" style="text-transform: uppercase;"></td>
+                    <td th:text="${mockData.httpMethod}" style="text-transform: uppercase;"></td>
+                    <td th:text="${mockData.successStatus}" style="color: green;"></td>
+                    <td th:text="${mockData.failureStatus}" style="color: red;"></td>
+                    <!--                    <td th:text="${mockData.successResponse}" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;"></td>-->
+                    <!--                    <td th:text="${mockData.failureResponse}" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;"></td>-->
+                </tr>
+            </th:block>
+            <th:block th:if="${#lists.isEmpty(mockDataList)}">
+                <tr>
+                    <td colspan="9">No data available.</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script type="text/javascript">
+
+</script>
+
+</body>
+
+</html>
