@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
-    <title>BezKoder - Spring Boot Thymeleaf example</title>
+    <title>MockData Table</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet"
@@ -16,56 +16,246 @@
 
 <body>
 <div th:replace="fragments/header :: header"></div>
-
-<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
-    <div class="container mt-4">
-        <table class="table table-bordered table-hover table-responsive-xl">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Path</th>
-<!--                <th>Created</th>-->
-                <th>Response Type</th>
-                <th>HTTP Method</th>
-                <th>Success Status</th>
-                <th>Failure Status</th>
-<!--                <th>Success Response</th>-->
-<!--                <th>Failure Response</th>-->
-            </tr>
-            </thead>
-            <tbody>
-            <th:block th:if="${not #lists.isEmpty(mockDataList)}">
-                <tr th:each="mockData : ${mockDataList}">
-                    <td th:text="${mockData.id}" style="font-weight: bold; text-align: center; color: #007bff;"></td>
-                    <td th:text="${mockData.path}"></td>
-<!--                    <td th:text="${mockData.created}" style="font-style: italic;"></td>-->
-                    <td th:text="${mockData.responseType}" style="text-transform: uppercase;"></td>
-                    <td th:text="${mockData.httpMethod}" style="text-transform: uppercase;"></td>
-                    <td th:text="${mockData.successStatus}" style="color: green;"></td>
-                    <td th:text="${mockData.failureStatus}" style="color: red;"></td>
-                    <!--                    <td th:text="${mockData.successResponse}" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;"></td>-->
-                    <!--                    <td th:text="${mockData.failureResponse}" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;"></td>-->
-                </tr>
-            </th:block>
-            <th:block th:if="${#lists.isEmpty(mockDataList)}">
-                <tr>
-                    <td colspan="9">No data available.</td>
-                </tr>
-            </th:block>
-            </tbody>
-        </table>
-    </div>
-
-
+<div class="container-fluid mt-4" style="max-width: 900px;">
+    <h2>MockData Table</h2>
+    <button type="button" class="btn btn-primary" onclick="openCreateModal()">Create New</button>
+    <table class="table table-bordered table-hover table-responsive-xl">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Path</th>
+            <th>Response Type</th>
+            <th>HTTP Method</th>
+            <th>Success Status</th>
+            <th>Failure Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Replace mockDataList with your actual list of data -->
+        <!-- Example: mockDataList = [{id: 1, path: ..., responseType: ..., ...}, {id: 2, path: ..., responseType: ..., ...}, ...] -->
+        <tr th:each="mockData : ${mockDataList}">
+            <td th:text="${mockData.id}" style="font-weight: bold; text-align: center; color: #007bff;"></td>
+            <td th:text="${mockData.path}"></td>
+            <td th:text="${mockData.responseType}" style="text-transform: uppercase;"></td>
+            <td th:text="${mockData.httpMethod}" style="text-transform: uppercase;"></td>
+            <td th:text="${mockData.successStatus}" style="color: green;"></td>
+            <td th:text="${mockData.failureStatus}" style="color: red;"></td>
+            <td class="d-flex justify-content-center align-items-center">
+                <button class="btn btn-primary btn-sm ml-2" th:attr="onclick='openShowModal(' + ${mockData.id} + ')'">
+                    Show
+                </button>
+                <button class="btn btn-success btn-sm ml-2" th:attr="onclick='openEditModal(' + ${mockData.id} + ')'">
+                    Edit
+                </button>
+                <button class="btn btn-danger btn-sm ml-2" th:attr="onclick='openDeleteModal(' + ${mockData.id} + ')'">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
+<!-- Show Modal -->
+<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showModalLabel">Show Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add content to show data here -->
+                <p>ID: <span id="showId"></span></p>
+                <p>Path: <span id="showPath"></span></p>
+                <!-- Add other properties to display here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div th:replace="fragments/footer :: footer"></div>
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add form elements to edit data here -->
+                <form id="editForm">
+                    <input type="hidden" id="editId" value="">
+                    <div class="form-group">
+                        <label for="editPath">Path:</label>
+                        <input type="text" class="form-control" id="editPath" required>
+                    </div>
+                    <!-- Add other properties to edit here -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveChanges()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<script type="text/javascript">
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add content to confirm deletion here -->
+                <p>Are you sure you want to delete data with ID <span id="deleteId"></span>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="deleteData()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Create New Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add form elements to create new data here -->
+                <form id="createForm">
+                    <div class="form-group">
+                        <label for="createPath">Path:</label>
+                        <input type="text" class="form-control" id="createPath" required>
+                    </div>
+                    <!-- Add other properties to create here -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveNewData()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript functions for showing, editing, deleting, and creating data
+
+    // Show Modal
+    const openShowModal = async (id) => {
+        console.log(id);
+        var mockData = await findMockDataById(id);
+        if (mockData) {
+            console.log("mockData show modal", mockData)
+            document.getElementById('showId').innerText = mockData.id;
+            document.getElementById('showPath').innerText = mockData.path;
+            // Add other properties to display in the modal here
+            $('#showModal').modal('show');
+        }
+    }
+
+    // Edit Modal
+    const openEditModal = async (id) => {
+        // Replace this logic with actual data retrieval based on the ID
+        var mockData = await findMockDataById(id);
+        if (mockData) {
+            document.getElementById('editId').value = mockData.id;
+            document.getElementById('editPath').value = mockData.path;
+            // Set other properties in the form fields
+            $('#editModal').modal('show');
+        }
+    }
+
+    const saveChanges = async () => {
+        // Retrieve data from the form and update the backend
+        var id = document.getElementById('editId').value;
+        var newPath = document.getElementById('editPath').value;
+        // Update other properties based on their form fields
+
+        // Replace this logic with your backend update API call
+
+        // Close the modal after saving
+        $('#editModal').modal('hide');
+    }
+
+    // Delete Modal
+    function openDeleteModal(id) {
+        document.getElementById('deleteId').innerText = id;
+        $('#deleteModal').modal('show');
+    }
+
+    // Delete Data
+    function deleteData() {
+        var id = document.getElementById('deleteId').innerText;
+        // Replace this logic with your backend delete API call
+
+        // Show a confirmation alert or success message
+
+        // Close the modal after deletion
+        $('#deleteModal').modal('hide');
+    }
+
+    // Create New Modal
+    function openCreateModal() {
+        // Clear form fields
+        document.getElementById('createPath').value = '';
+        // Clear other properties in the form fields
+
+        $('#createModal').modal('show');
+    }
+
+    // Save New Data
+    function saveNewData() {
+        // Retrieve data from the form and send it to the backend for creation
+        var newPath = document.getElementById('createPath').value;
+        // Get other properties from the form fields
+
+        // Replace this logic with your backend create API call
+
+        // Close the modal after saving
+        $('#createModal').modal('hide');
+    }
+
+    // Sample data retrieval function
+    async function findMockDataById(id) {
+        try {
+            const response = await fetch(`/mocks/${id}`); // Replace "/api/mockdata" with your backend endpoint
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            const mockData = await response.json();
+            console.log(mockData);
+            return mockData;
+        } catch (error) {
+            console.error('Error fetching MockData:', error);
+            return null;
+        }
+    }
 </script>
-
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 
 </html>
