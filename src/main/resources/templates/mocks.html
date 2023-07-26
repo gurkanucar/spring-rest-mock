@@ -146,10 +146,10 @@
     </div>
 </div>
 
+
 <!-- Create Modal -->
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="createModalLabel">Create New Data</h5>
@@ -160,11 +160,50 @@
             <div class="modal-body">
                 <!-- Add form elements to create new data here -->
                 <form id="createForm">
+                    <!-- Single column for "Path" -->
                     <div class="form-group">
                         <label for="createPath">Path:</label>
                         <input type="text" class="form-control" id="createPath" required>
                     </div>
-                    <!-- Add other properties to create here -->
+
+                    <!-- Two columns for the rest of the properties -->
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="createResponseType">Response Type:</label>
+                            <select class="form-control" id="createResponseType" required>
+                                <option value="SUCCESS">SUCCESS</option>
+                                <option value="FAILURE">FAILURE</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="createHttpMethod">HTTP Method:</label>
+                            <select class="form-control" id="createHttpMethod" required>
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <!-- Add other HTTP methods as needed -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="createSuccessStatus">Success Status:</label>
+                            <input type="number" class="form-control" id="createSuccessStatus" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="createFailureStatus">Failure Status:</label>
+                            <input type="number" class="form-control" id="createFailureStatus" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="createSuccessResponse">Success Response:</label>
+                            <textarea class="form-control" id="createSuccessResponse" rows="5" required></textarea>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="createFailureResponse">Failure Response:</label>
+                            <textarea class="form-control" id="createFailureResponse" rows="5" required></textarea>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -174,6 +213,8 @@
         </div>
     </div>
 </div>
+
+
 
 <script>
 
@@ -241,7 +282,12 @@
     function openCreateModal() {
         // Clear form fields
         document.getElementById('createPath').value = '';
-        // Clear other properties in the form fields
+        document.getElementById('createResponseType').value = 'SUCCESS';
+        document.getElementById('createHttpMethod').value = 'GET';
+        document.getElementById('createSuccessStatus').value = '';
+        document.getElementById('createFailureStatus').value = '';
+        document.getElementById('createSuccessResponse').value = '';
+        document.getElementById('createFailureResponse').value = '';
 
         $('#createModal').modal('show');
     }
