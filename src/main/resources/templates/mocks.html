@@ -59,7 +59,7 @@
 
 <!-- Show Modal -->
 <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="showModalLabel">Show Data</h5>
@@ -68,10 +68,23 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Add content to show data here -->
-                <p>ID: <span id="showId"></span></p>
-                <p>Path: <span id="showPath"></span></p>
-                <!-- Add other properties to display here -->
+                <p><b>ID:</b> <span id="showId"></span></p>
+                <p><b>Path:</b> <span id="showPath"></span></p>
+                <div style="display: flex; flex-direction: row;">
+                    <div style="width: 50%; padding-right: 10px;">
+                        <p><b>Success Response:</b></p>
+                        <textarea id="showSuccessResponse" class="form-control success-text" rows="10" disabled></textarea>
+                    </div>
+                    <div style="width: 50%; padding-left: 10px;">
+                        <p><b>Failure Response:</b></p>
+                        <textarea id="showFailureResponse" class="form-control failure-text" rows="10" disabled></textarea>
+                    </div>
+                </div>
+                <p><b>Response Type:</b> <span id="showResponseType"></span></p>
+                <p><b>HTTP Method:</b> <span id="showHttpMethod"></span></p>
+                <p><b style="color: green;">Success Status:</b> <span id="showSuccessStatus"></span></p>
+                <p><b style="color: red;">Failure Status:</b> <span id="showFailureStatus"></span></p>
+                <p><b>Created:</b> <span id="showCreated"></span></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -79,6 +92,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -162,20 +176,25 @@
 </div>
 
 <script>
-    // JavaScript functions for showing, editing, deleting, and creating data
 
-    // Show Modal
     const openShowModal = async (id) => {
         console.log(id);
         var mockData = await findMockDataById(id);
         if (mockData) {
-            console.log("mockData show modal", mockData)
+            console.log("mockData show modal", mockData);
             document.getElementById('showId').innerText = mockData.id;
             document.getElementById('showPath').innerText = mockData.path;
-            // Add other properties to display in the modal here
+            document.getElementById('showSuccessResponse').value = mockData.successResponse;
+            document.getElementById('showFailureResponse').value = mockData.failureResponse;
+            document.getElementById('showResponseType').innerText = mockData.responseType;
+            document.getElementById('showHttpMethod').innerText = mockData.httpMethod;
+            document.getElementById('showSuccessStatus').innerText = mockData.successStatus;
+            document.getElementById('showFailureStatus').innerText = mockData.failureStatus;
+            document.getElementById('showCreated').innerText = mockData.created;
             $('#showModal').modal('show');
         }
     }
+
 
     // Edit Modal
     const openEditModal = async (id) => {

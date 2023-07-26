@@ -39,3 +39,10 @@
     width: 80px;
     background: grey;
 }
+.success-text {
+    color: green;
+}
+
+.failure-text {
+    color: red;
+}
