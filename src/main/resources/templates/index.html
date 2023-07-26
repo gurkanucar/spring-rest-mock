@@ -13,7 +13,7 @@
 <body>
 <section id="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Panel</a>
+        <a class="navbar-brand" href="">Panel</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,11 +22,9 @@
 <section id="mockContainer">
     <h2 style="padding-top: 30px; padding-bottom: 20px; margin-top: 50px;" class="text-center">Welcome to Panel</h2>
     <div class="d-flex justify-content-center">
-        <form th:action="@{/mocks}" method="GET" enctype="multipart/form-data">
             <div class="form-group">
-                <button type="submit" class="btn btn-success btn-lg text-white">View Mock Services</button>
+                <a th:href="@{/mocks}" class="btn btn-success btn-lg text-white">View Mock Services</a>
             </div>
-        </form>
     </div>
 
 </section>
