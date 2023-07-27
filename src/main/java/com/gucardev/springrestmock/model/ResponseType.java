@@ -1,4 +1,4 @@
-package com.gucardev.springrestmock;
+package com.gucardev.springrestmock.model;
 
 public enum ResponseType {
   SUCCESS,

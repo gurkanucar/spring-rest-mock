@@ -1,7 +1,7 @@
 package com.gucardev.springrestmock.service;
 
-import com.gucardev.springrestmock.HttpMethod;
-import com.gucardev.springrestmock.ResponseType;
+import com.gucardev.springrestmock.model.HttpMethod;
+import com.gucardev.springrestmock.model.ResponseType;
 import com.gucardev.springrestmock.model.MockData;
 import com.gucardev.springrestmock.repository.MockDataRepository;
 import java.util.ArrayList;

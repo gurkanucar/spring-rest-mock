@@ -1,4 +1,4 @@
-package com.gucardev.springrestmock;
+package com.gucardev.springrestmock.controller;
 
 import com.gucardev.springrestmock.model.MockData;
 import com.gucardev.springrestmock.service.MockDataService;

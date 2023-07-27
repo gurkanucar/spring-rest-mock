@@ -1,4 +1,4 @@
-package com.gucardev.springrestmock;
+package com.gucardev.springrestmock.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

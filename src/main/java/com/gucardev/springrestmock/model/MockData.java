@@ -3,8 +3,6 @@ package com.gucardev.springrestmock.model;
 import java.time.LocalDate;
 import javax.persistence.*;
 
-import com.gucardev.springrestmock.HttpMethod;
-import com.gucardev.springrestmock.ResponseType;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
