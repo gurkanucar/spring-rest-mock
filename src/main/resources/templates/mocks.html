@@ -153,6 +153,7 @@
 
 <script>
 
+
     const openShowModal = async (id) => {
         console.log(id);
         var mockData = await findMockDataById(id);
@@ -171,7 +172,9 @@
         }
     }
 
-
+    const openCreateModal = () => {
+        $('#createModal').modal('show');
+    };
     // Edit Modal
     const openEditModal = async (id) => {
         // Replace this logic with actual data retrieval based on the ID
@@ -205,44 +208,61 @@
     // Delete Data
     function deleteData() {
         var id = document.getElementById('deleteId').innerText;
-        // Replace this logic with your backend delete API call
 
-        // Show a confirmation alert or success message
-
-        // Close the modal after deletion
         $('#deleteModal').modal('hide');
     }
 
-    // Create New Modal
-    function openCreateModal() {
-        // Clear form fields
-        document.getElementById('createPath').value = '';
-        document.getElementById('createResponseType').value = 'SUCCESS';
-        document.getElementById('createHttpMethod').value = 'GET';
-        document.getElementById('createSuccessStatus').value = '';
-        document.getElementById('createFailureStatus').value = '';
-        document.getElementById('createSuccessResponse').value = '';
-        document.getElementById('createFailureResponse').value = '';
 
-        $('#createModal').modal('show');
+    function saveNewData(event) {
+        event.preventDefault();
+        console.log("SAVE NEW DATA")
+        // Retrieve form data
+        const path = document.getElementById('createPath').value;
+        const responseType = document.getElementById('createResponseType').value;
+        const httpMethod = document.getElementById('createHttpMethod').value;
+        const successStatus = document.getElementById('createSuccessStatus').value;
+        const failureStatus = document.getElementById('createFailureStatus').value;
+        const successResponse = document.getElementById('createSuccessResponse').value;
+        const failureResponse = document.getElementById('createFailureResponse').value;
+
+        const data = {
+            path: path,
+            responseType: responseType,
+            httpMethod: httpMethod,
+            successStatus: successStatus,
+            failureStatus: failureStatus,
+            successResponse: successResponse,
+            failureResponse: failureResponse,
+        };
+
+        fetch('/api/mock', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Data created successfully:', data);
+                $('#createModal').modal('hide');
+                // Refresh the page
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
-    // Save New Data
-    function saveNewData() {
-        // Retrieve data from the form and send it to the backend for creation
-        var newPath = document.getElementById('createPath').value;
-        // Get other properties from the form fields
 
-        // Replace this logic with your backend create API call
-
-        // Close the modal after saving
-        $('#createModal').modal('hide');
-    }
-
-    // Sample data retrieval function
     async function findMockDataById(id) {
         try {
-            const response = await fetch(`/mocks/${id}`); // Replace "/api/mockdata" with your backend endpoint
+            const response = await fetch(`/api/mock/${id}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok.');
             }
