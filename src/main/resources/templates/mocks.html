@@ -93,36 +93,6 @@
     </div>
 </div>
 
-
-<!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Data</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Add form elements to edit data here -->
-                <form id="editForm">
-                    <input type="hidden" id="editId" value="">
-                    <div class="form-group">
-                        <label for="editPath">Path:</label>
-                        <input type="text" class="form-control" id="editPath" required>
-                    </div>
-                    <!-- Add other properties to edit here -->
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="saveChanges()">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
      aria-hidden="true">
@@ -149,6 +119,7 @@
 
 <!-- Create Modal -->
 <div th:replace="modals/create_modal :: #createModal"></div>
+<div th:replace="modals/edit_modal :: #editModal"></div>
 
 
 <script>
@@ -158,16 +129,7 @@
         console.log(id);
         var mockData = await findMockDataById(id);
         if (mockData) {
-            console.log("mockData show modal", mockData);
-            document.getElementById('showId').innerText = mockData.id;
-            document.getElementById('showPath').innerText = mockData.path;
-            document.getElementById('showSuccessResponse').value = mockData.successResponse;
-            document.getElementById('showFailureResponse').value = mockData.failureResponse;
-            document.getElementById('showResponseType').innerText = mockData.responseType;
-            document.getElementById('showHttpMethod').innerText = mockData.httpMethod;
-            document.getElementById('showSuccessStatus').innerText = mockData.successStatus;
-            document.getElementById('showFailureStatus').innerText = mockData.failureStatus;
-            document.getElementById('showCreated').innerText = mockData.created;
+            fillInputs(mockData);
             $('#showModal').modal('show');
         }
     }
@@ -182,7 +144,7 @@
 
 
         if (mockData) {
-            fillInputs();
+            fillInputs2(mockData);
             $('#editModal').modal('show');
         }
     }
@@ -250,7 +212,7 @@
             });
     }
 
-    const fillInputs = (innerText) => {
+    const fillInputs = (mockData) => {
         document.getElementById('showId').innerText = mockData.id;
         document.getElementById('showPath').innerText = mockData.path;
         document.getElementById('showSuccessResponse').value = mockData.successResponse;
@@ -260,6 +222,15 @@
         document.getElementById('showSuccessStatus').innerText = mockData.successStatus;
         document.getElementById('showFailureStatus').innerText = mockData.failureStatus;
         document.getElementById('showCreated').innerText = mockData.created;
+    }
+ const fillInputs2 = (mockData) => {
+        document.getElementById('editPath').value  = mockData.path;
+        document.getElementById('editSuccessResponse').value = mockData.successResponse;
+        document.getElementById('editFailureResponse').value = mockData.failureResponse;
+        document.getElementById('editResponseType').value  = mockData.responseType;
+        document.getElementById('editHttpMethod').value  = mockData.httpMethod;
+        document.getElementById('editSuccessStatus').value  = mockData.successStatus;
+        document.getElementById('editFailureStatus').value  = mockData.failureStatus;
     }
 
     async function findMockDataById(id) {
