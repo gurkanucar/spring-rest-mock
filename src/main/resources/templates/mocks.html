@@ -32,8 +32,6 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Replace mockDataList with your actual list of data -->
-        <!-- Example: mockDataList = [{id: 1, path: ..., responseType: ..., ...}, {id: 2, path: ..., responseType: ..., ...}, ...] -->
         <tr th:each="mockData : ${mockDataList}">
             <td th:text="${mockData.id}" style="font-weight: bold; text-align: center; color: #007bff;"></td>
             <td th:text="${mockData.path}"></td>
@@ -73,11 +71,13 @@
                 <div style="display: flex; flex-direction: row;">
                     <div style="width: 50%; padding-right: 10px;">
                         <p><b>Success Response:</b></p>
-                        <textarea id="showSuccessResponse" class="form-control success-text" rows="10" disabled></textarea>
+                        <textarea id="showSuccessResponse" class="form-control success-text" rows="10"
+                                  disabled></textarea>
                     </div>
                     <div style="width: 50%; padding-left: 10px;">
                         <p><b>Failure Response:</b></p>
-                        <textarea id="showFailureResponse" class="form-control failure-text" rows="10" disabled></textarea>
+                        <textarea id="showFailureResponse" class="form-control failure-text" rows="10"
+                                  disabled></textarea>
                     </div>
                 </div>
                 <p><b>Response Type:</b> <span id="showResponseType"></span></p>
@@ -175,14 +175,14 @@
     const openCreateModal = () => {
         $('#createModal').modal('show');
     };
-    // Edit Modal
+
     const openEditModal = async (id) => {
         // Replace this logic with actual data retrieval based on the ID
         var mockData = await findMockDataById(id);
+
+
         if (mockData) {
-            document.getElementById('editId').value = mockData.id;
-            document.getElementById('editPath').value = mockData.path;
-            // Set other properties in the form fields
+            fillInputs();
             $('#editModal').modal('show');
         }
     }
@@ -215,8 +215,6 @@
 
     function saveNewData(event) {
         event.preventDefault();
-        console.log("SAVE NEW DATA")
-        // Retrieve form data
         const path = document.getElementById('createPath').value;
         const responseType = document.getElementById('createResponseType').value;
         const httpMethod = document.getElementById('createHttpMethod').value;
@@ -237,9 +235,7 @@
 
         fetch('/api/mock', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data),
         })
             .then((response) => {
@@ -249,16 +245,22 @@
                 return response.json();
             })
             .then((data) => {
-                console.log('Data created successfully:', data);
                 $('#createModal').modal('hide');
-                // Refresh the page
                 location.reload();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
             });
     }
 
+    const fillInputs = (innerText) => {
+        document.getElementById('showId').innerText = mockData.id;
+        document.getElementById('showPath').innerText = mockData.path;
+        document.getElementById('showSuccessResponse').value = mockData.successResponse;
+        document.getElementById('showFailureResponse').value = mockData.failureResponse;
+        document.getElementById('showResponseType').innerText = mockData.responseType;
+        document.getElementById('showHttpMethod').innerText = mockData.httpMethod;
+        document.getElementById('showSuccessStatus').innerText = mockData.successStatus;
+        document.getElementById('showFailureStatus').innerText = mockData.failureStatus;
+        document.getElementById('showCreated').innerText = mockData.created;
+    }
 
     async function findMockDataById(id) {
         try {
