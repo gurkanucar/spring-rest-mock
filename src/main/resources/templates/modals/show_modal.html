@@ -1,0 +1,36 @@
+<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showModalLabel">Show Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><b>ID:</b> <span id="showId"></span></p>
+                <p><b>Path:</b> <span id="showPath"></span></p>
+                <div style="display: flex; flex-direction: row;">
+                    <div style="width: 50%; padding-right: 10px;">
+                        <p><b>Success Response:</b></p>
+                        <textarea id="showSuccessResponse" class="form-control success-text" rows="10"
+                                  disabled></textarea>
+                    </div>
+                    <div style="width: 50%; padding-left: 10px;">
+                        <p><b>Failure Response:</b></p>
+                        <textarea id="showFailureResponse" class="form-control failure-text" rows="10"
+                                  disabled></textarea>
+                    </div>
+                </div>
+                <p><b>Response Type:</b> <span id="showResponseType"></span></p>
+                <p><b>HTTP Method:</b> <span id="showHttpMethod"></span></p>
+                <p><b style="color: green;">Success Status:</b> <span id="showSuccessStatus"></span></p>
+                <p><b style="color: red;">Failure Status:</b> <span id="showFailureStatus"></span></p>
+                <p><b>Created:</b> <span id="showCreated"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
