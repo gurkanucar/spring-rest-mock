@@ -28,12 +28,12 @@ public class MockData {
   @Enumerated(EnumType.STRING)
   private HttpMethod httpMethod;
 
-  public Integer successStatus;
-  public Integer failureStatus;
+  private Integer successStatus;
+  private Integer failureStatus;
 
   @Column(length = 2000)
-  public String successResponse;
+  private String successResponse;
 
   @Column(length = 2000)
-  public String failureResponse;
+  private String failureResponse;
 }
