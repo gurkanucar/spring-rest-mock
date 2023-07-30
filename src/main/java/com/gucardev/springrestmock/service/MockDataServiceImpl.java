@@ -1,8 +1,8 @@
 package com.gucardev.springrestmock.service;
 
 import com.gucardev.springrestmock.model.HttpMethod;
-import com.gucardev.springrestmock.model.ResponseType;
 import com.gucardev.springrestmock.model.MockData;
+import com.gucardev.springrestmock.model.ResponseType;
 import com.gucardev.springrestmock.repository.MockDataRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,12 @@ public class MockDataServiceImpl implements MockDataService {
     MockData existingMockData = mockDataRepository.findById(id).orElse(null);
     if (existingMockData != null) {
       existingMockData.setPath(mockData.getPath());
+      existingMockData.setFailureStatus(mockData.getFailureStatus());
+      existingMockData.setSuccessStatus(mockData.getSuccessStatus());
+      existingMockData.setFailureResponse(mockData.getFailureResponse());
+      existingMockData.setSuccessResponse(mockData.getSuccessResponse());
+      existingMockData.setHttpMethod(mockData.getHttpMethod());
+      existingMockData.setResponseType(mockData.getResponseType());
       return mockDataRepository.save(existingMockData);
     } else {
       return null;
