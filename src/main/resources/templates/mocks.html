@@ -121,69 +121,100 @@
 <div th:replace="modals/create_modal :: #createModal"></div>
 <div th:replace="modals/edit_modal :: #editModal"></div>
 
-
 <script>
 
+    const getInputValue = (elementId) => document.getElementById(elementId).value;
+    const getElementInnerText = (elementId) => document.getElementById(elementId).innerText;
+
+    async function fetchMockData(url) {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
+        }
+        return response.json();
+    }
+
+    const openModal = (modalId) => $(modalId).modal('show')
+
+    const closeModal = (modalId) => $(modalId).modal('hide');
+
+    const pascalToCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
+
+    function fillInputs(modalPrefix, mockData) {
+        const fields = ['Id', 'Path', 'SuccessResponse', 'FailureResponse', 'ResponseType', 'HttpMethod',
+            'SuccessStatus', 'FailureStatus', 'Created'];
+
+        fields.forEach(field => {
+            const element = document.getElementById(`${modalPrefix}${field}`);
+            if (!element) {
+                return;
+            }
+            console.log(element)
+            if (element.tagName === 'SELECT' || element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.value = mockData[pascalToCamelCase(field)];
+            } else {
+                element.innerText = mockData[pascalToCamelCase(field)];
+            }
+        });
+    }
 
     const openShowModal = async (id) => {
-        console.log(id);
-        var mockData = await findMockDataById(id);
-        if (mockData) {
-            fillInputs(mockData);
-            $('#showModal').modal('show');
+        try {
+            const mockData = await fetchMockData(`/api/mock/${id}`);
+            if (mockData) {
+                fillInputs('show', mockData);
+                openModal('#showModal');
+            }
+        } catch (error) {
+            console.error('Error fetching MockData:', error);
         }
     }
 
     const openCreateModal = () => {
-        $('#createModal').modal('show');
+        openModal('#createModal');
     };
 
     const openEditModal = async (id) => {
-        // Replace this logic with actual data retrieval based on the ID
-        var mockData = await findMockDataById(id);
-
-
-        if (mockData) {
-            fillInputs2(mockData);
-            $('#editModal').modal('show');
+        try {
+            const mockData = await fetchMockData(`/api/mock/${id}`);
+            if (mockData) {
+                fillInputs('edit', mockData);
+                openModal('#editModal');
+            }
+        } catch (error) {
+            console.error('Error fetching MockData:', error);
         }
     }
 
     const saveChanges = async () => {
-        // Retrieve data from the form and update the backend
-        var id = document.getElementById('editId').value;
-        var newPath = document.getElementById('editPath').value;
-        // Update other properties based on their form fields
+        const id = document.getElementById('editId').value;
+        const newPath = document.getElementById('editPath').value;
 
-        // Replace this logic with your backend update API call
-
-        // Close the modal after saving
-        $('#editModal').modal('hide');
+        closeModal('#editModal');
     }
 
-    // Delete Modal
     function openDeleteModal(id) {
         document.getElementById('deleteId').innerText = id;
-        $('#deleteModal').modal('show');
+        openModal('#deleteModal');
     }
 
-    // Delete Data
     function deleteData() {
-        var id = document.getElementById('deleteId').innerText;
+        const id = getElementInnerText('deleteId');
 
-        $('#deleteModal').modal('hide');
+        closeModal('#deleteModal');
     }
 
 
     function saveNewData(event) {
         event.preventDefault();
-        const path = document.getElementById('createPath').value;
-        const responseType = document.getElementById('createResponseType').value;
-        const httpMethod = document.getElementById('createHttpMethod').value;
-        const successStatus = document.getElementById('createSuccessStatus').value;
-        const failureStatus = document.getElementById('createFailureStatus').value;
-        const successResponse = document.getElementById('createSuccessResponse').value;
-        const failureResponse = document.getElementById('createFailureResponse').value;
+        const path = getInputValue('createPath');
+        const responseType = getInputValue('createResponseType');
+        const httpMethod = getInputValue('createHttpMethod');
+        const successStatus = getInputValue('createSuccessStatus');
+        const failureStatus = getInputValue('createFailureStatus');
+        const successResponse = getInputValue('createSuccessResponse');
+        const failureResponse = getInputValue('createFailureResponse');
+
 
         const data = {
             path: path,
@@ -207,47 +238,16 @@
                 return response.json();
             })
             .then((data) => {
-                $('#createModal').modal('hide');
+                closeModal('#createModal');
                 location.reload();
+            })
+            .catch((error) => {
+                console.error('Error saving new data:', error);
             });
     }
 
-    const fillInputs = (mockData) => {
-        document.getElementById('showId').innerText = mockData.id;
-        document.getElementById('showPath').innerText = mockData.path;
-        document.getElementById('showSuccessResponse').value = mockData.successResponse;
-        document.getElementById('showFailureResponse').value = mockData.failureResponse;
-        document.getElementById('showResponseType').innerText = mockData.responseType;
-        document.getElementById('showHttpMethod').innerText = mockData.httpMethod;
-        document.getElementById('showSuccessStatus').innerText = mockData.successStatus;
-        document.getElementById('showFailureStatus').innerText = mockData.failureStatus;
-        document.getElementById('showCreated').innerText = mockData.created;
-    }
- const fillInputs2 = (mockData) => {
-        document.getElementById('editPath').value  = mockData.path;
-        document.getElementById('editSuccessResponse').value = mockData.successResponse;
-        document.getElementById('editFailureResponse').value = mockData.failureResponse;
-        document.getElementById('editResponseType').value  = mockData.responseType;
-        document.getElementById('editHttpMethod').value  = mockData.httpMethod;
-        document.getElementById('editSuccessStatus').value  = mockData.successStatus;
-        document.getElementById('editFailureStatus').value  = mockData.failureStatus;
-    }
-
-    async function findMockDataById(id) {
-        try {
-            const response = await fetch(`/api/mock/${id}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok.');
-            }
-            const mockData = await response.json();
-            console.log(mockData);
-            return mockData;
-        } catch (error) {
-            console.error('Error fetching MockData:', error);
-            return null;
-        }
-    }
 </script>
+
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 
