@@ -246,6 +246,48 @@
             });
     }
 
+    const updateData = async (event) => {
+        event.preventDefault();
+        const id = document.getElementById('editId').value;
+        const newPath = document.getElementById('editPath').value;
+        const responseType = document.getElementById('editResponseType').value;
+        const httpMethod = document.getElementById('editHttpMethod').value;
+        const successStatus = document.getElementById('editSuccessStatus').value;
+        const failureStatus = document.getElementById('editFailureStatus').value;
+        const successResponse = document.getElementById('editSuccessResponse').value;
+        const failureResponse = document.getElementById('editFailureResponse').value;
+
+        const data = {
+            id: id,
+            path: newPath,
+            responseType: responseType,
+            httpMethod: httpMethod,
+            successStatus: successStatus,
+            failureStatus: failureStatus,
+            successResponse: successResponse,
+            failureResponse: failureResponse,
+        };
+
+        fetch(`/api/mock/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                closeModal('#editModal');
+                location.reload();
+            })
+            .catch((error) => {
+                console.error('Error updating data:', error);
+            });
+    };
+
 </script>
 
 <div th:replace="fragments/footer :: footer"></div>

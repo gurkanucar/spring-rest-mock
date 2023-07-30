@@ -8,7 +8,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editForm" onsubmit="saveNewData(event)">
+                <form id="editForm" onsubmit="updateData(event)">
+                    <div class="form-group">
+                        <label for="editId">ID:</label>
+                        <input type="text" class="form-control" id="editId" readonly>
+                    </div>
+
                     <div class="form-group">
                         <label for="editPath">Path:</label>
                         <input type="text" class="form-control" id="editPath" required>
