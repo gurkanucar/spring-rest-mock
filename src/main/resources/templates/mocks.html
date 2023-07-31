@@ -148,7 +148,7 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json();
+                return response;
             })
             .then((data) => {
                 closeModal('#deleteModal');
@@ -157,7 +157,6 @@
             .catch((error) => {
                 console.error('Error deleting data:', error);
             });
-        closeModal('#deleteModal');
     }
 
 
