@@ -37,6 +37,10 @@ public class MockDataServiceImpl implements MockDataService {
 
   @Override
   public MockData save(MockData mockData) {
+    if (mockDataRepository.existsMockDataByPathAndHttpMethod(
+        mockData.getPath(), mockData.getHttpMethod())) {
+      throw new RuntimeException("already exists!");
+    }
     return mockDataRepository.save(mockData);
   }
 
