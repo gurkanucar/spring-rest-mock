@@ -7,7 +7,7 @@ public enum HttpMethod {
   PATCH,
   DELETE;
 
-  public HttpMethod getFromString(String method) {
+  public static HttpMethod getFromString(String method) {
     for (HttpMethod value : HttpMethod.values()) {
       if (value.name().equals(method)) {
         return value;
