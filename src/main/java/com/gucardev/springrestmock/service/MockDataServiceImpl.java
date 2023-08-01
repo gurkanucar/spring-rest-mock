@@ -75,7 +75,22 @@ public class MockDataServiceImpl implements MockDataService {
   void setInitialData() {
 
     List<MockData> mockDataList = new ArrayList<>();
-
+    mockDataList.add(
+        MockData.builder()
+            .responseType(ResponseType.SUCCESS)
+            .path("/api/entries/1")
+            .httpMethod(HttpMethod.GET)
+            .successStatus(200)
+            .failureStatus(401)
+            .successResponse(
+                "{\n"
+                    + "  \"userId\": 1,\n"
+                    + "  \"id\": 1,\n"
+                    + "  \"title\": \"delectus aut autem\",\n"
+                    + "  \"completed\": false\n"
+                    + "}")
+            .failureResponse("failureResponse1")
+            .build());
     mockDataList.add(
         MockData.builder()
             .responseType(ResponseType.SUCCESS)
