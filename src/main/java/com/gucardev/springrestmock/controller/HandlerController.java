@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/mock")
+@RequestMapping("${mock.api.handler.endpoint}")
 public class HandlerController {
 
   @RequestMapping("/**")
