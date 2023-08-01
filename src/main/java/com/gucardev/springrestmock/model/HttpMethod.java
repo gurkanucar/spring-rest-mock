@@ -5,5 +5,14 @@ public enum HttpMethod {
   POST,
   PUT,
   PATCH,
-  DELETE
+  DELETE;
+
+  public HttpMethod getFromString(String method) {
+    for (HttpMethod value : HttpMethod.values()) {
+      if (value.name().equals(method)) {
+        return value;
+      }
+    }
+    throw new RuntimeException("method not found!");
+  }
 }
