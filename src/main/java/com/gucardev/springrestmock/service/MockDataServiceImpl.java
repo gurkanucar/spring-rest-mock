@@ -29,6 +29,13 @@ public class MockDataServiceImpl implements MockDataService {
   }
 
   @Override
+  public MockData findByPathAndMethod(String path, HttpMethod httpMethod) {
+    return mockDataRepository
+        .findMockDataByPathAndHttpMethod(path, httpMethod)
+        .orElseThrow(() -> new RuntimeException("not found!"));
+  }
+
+  @Override
   public MockData save(MockData mockData) {
     return mockDataRepository.save(mockData);
   }
