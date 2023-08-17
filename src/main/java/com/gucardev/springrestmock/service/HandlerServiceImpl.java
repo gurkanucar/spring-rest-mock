@@ -2,6 +2,7 @@ package com.gucardev.springrestmock.service;
 
 import com.gucardev.springrestmock.model.HttpMethod;
 import com.gucardev.springrestmock.model.MockData;
+import com.gucardev.springrestmock.model.ResponseType;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +27,20 @@ public class HandlerServiceImpl implements HandlerService {
     requestPath = requestPath.replace(handlerEndpoint, "");
     String requestMethod = request.getMethod();
     log.info("Request came to path: {} {}", requestPath, requestMethod);
-    return mockDataService.findByPathAndMethod(
-        requestPath, HttpMethod.getFromString(requestMethod));
+    MockData mockData =
+        mockDataService.findByPathAndMethod(requestPath, HttpMethod.getFromString(requestMethod));
+
+    if (mockData.getResponseType().equals(ResponseType.RANDOM)) {
+      mockData.setResponseType(Math.random() > 0.5 ? ResponseType.SUCCESS : ResponseType.FAILURE);
+    }
+
+    if (mockData.getResponseType().equals(ResponseType.SUCCESS)) {
+      mockData.setChosenResponse(mockData.getSuccessResponse());
+      mockData.setChosenStatus(mockData.getSuccessStatus());
+    } else if (mockData.getResponseType().equals(ResponseType.FAILURE)) {
+      mockData.setChosenResponse(mockData.getFailureResponse());
+      mockData.setChosenStatus(mockData.getFailureStatus());
+    }
+    return mockData;
   }
 }

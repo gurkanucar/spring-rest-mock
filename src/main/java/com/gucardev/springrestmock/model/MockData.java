@@ -36,4 +36,10 @@ public class MockData {
 
   @Column(length = 2000)
   private String failureResponse;
+
+  @Transient
+  private String chosenResponse;
+
+  @Transient
+  private Integer chosenStatus;
 }
