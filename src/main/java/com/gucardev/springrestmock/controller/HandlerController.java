@@ -22,6 +22,6 @@ public class HandlerController {
   @RequestMapping("/**")
   public ResponseEntity<?> handleRequest(HttpServletRequest request) {
     MockData mockData = handlerService.getByRequest(request);
-    return ResponseEntity.status(mockData.getSuccessStatus()).body(mockData.getSuccessResponse());
+    return ResponseEntity.status(mockData.getChosenStatus()).body(mockData.getChosenResponse());
   }
 }
