@@ -6,6 +6,7 @@ import com.gucardev.springrestmock.model.ResponseType;
 import com.gucardev.springrestmock.repository.MockDataRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,13 @@ public class MockDataServiceImpl implements MockDataService {
   @Override
   public MockData update(Long id, MockData mockData) {
     MockData existingMockData = mockDataRepository.findById(id).orElse(null);
+    Optional<MockData> samePathAndMethodMock =
+        mockDataRepository.findMockDataByPathAndHttpMethod(
+            mockData.getPath(), mockData.getHttpMethod());
+    if (samePathAndMethodMock.isPresent() && !samePathAndMethodMock.get().getId().equals(id)) {
+      throw new RuntimeException("already exists!");
+    }
+
     if (existingMockData != null) {
       existingMockData.setPath(mockData.getPath());
       existingMockData.setFailureStatus(mockData.getFailureStatus());
@@ -57,7 +65,7 @@ public class MockDataServiceImpl implements MockDataService {
       existingMockData.setResponseType(mockData.getResponseType());
       return mockDataRepository.save(existingMockData);
     } else {
-      return null;
+      throw new RuntimeException("already exists!");
     }
   }
 
@@ -100,17 +108,6 @@ public class MockDataServiceImpl implements MockDataService {
             .failureStatus(401)
             .successResponse("successResponse1")
             .failureResponse("failureResponse1")
-            .build());
-
-    mockDataList.add(
-        MockData.builder()
-            .responseType(ResponseType.SUCCESS)
-            .path("/api/auth/login")
-            .httpMethod(HttpMethod.POST)
-            .successStatus(200)
-            .failureStatus(401)
-            .successResponse("successResponse2")
-            .failureResponse("failureResponse2")
             .build());
 
     mockDataList.add(
