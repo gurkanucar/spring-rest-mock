@@ -197,6 +197,7 @@
                 location.reload();
             })
             .catch((error) => {
+                alert("something went wrong! Path and Route together must be unique");
                 console.error('Error saving new data:', error);
             });
     }
@@ -240,6 +241,7 @@
             })
             .catch((error) => {
                 console.error('Error updating data:', error);
+                alert("something went wrong! Path and Route together must be unique");
             });
     };
 
