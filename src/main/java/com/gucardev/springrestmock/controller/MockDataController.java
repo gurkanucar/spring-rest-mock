@@ -3,7 +3,9 @@ package com.gucardev.springrestmock.controller;
 import com.gucardev.springrestmock.model.MockData;
 import com.gucardev.springrestmock.service.MockDataService;
 import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,12 @@ public class MockDataController {
 
   public MockDataController(MockDataService mockDataService) {
     this.mockDataService = mockDataService;
+  }
+
+  @GetMapping("/base-path")
+  public ResponseEntity<Map<String, String>> getBasePath(
+      @Value("${mock.api.handler.endpoint}") String basePath) {
+    return ResponseEntity.ok(Map.of("path", basePath));
   }
 
   @GetMapping("/{id}")
