@@ -1,0 +1,54 @@
+[
+  {
+    "responseType": "SUCCESS",
+    "path": "/api/entries/1",
+    "contentType": "REST",
+    "httpMethod": "GET",
+    "successStatus": 200,
+    "failureStatus": 401,
+    "successResponse": "{\n  \"userId\": 1,\n  \"id\": 1,\n  \"title\": \"delectus aut autem\",\n  \"completed\": false\n}",
+    "failureResponse": " {\n    \"timestamp\": \"2023-09-26T13:41:36.057+00:00\",\n    \"error\": \"something went wrong!\"\n  }"
+  },
+  {
+    "responseType": "RANDOM",
+    "path": "/api/user/profile",
+    "delay": 5000,
+    "httpMethod": "POST",
+    "contentType": "SOAP",
+    "successStatus": 200,
+    "failureStatus": 401,
+    "successResponse": "<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n    <soap:Body>\n        <users>\n            <user>\n                <id>1</id>\n                <name>grkn</name>\n            </user>\n            <user>\n                <id>2</id>\n                <name>ali</name>\n            </user>\n            <user>\n                <id>3</id>\n                <name>veli</name>\n            </user>\n        </users>\n    </soap:Body>\n</soap:Envelope>",
+    "failureResponse": "<env:Envelope xmlns:env=http://www.w3.org/2003/05/soap-envelope>\n <env:Body>\n <env:Fault>\n <Fault subelements>\n </env:Fault>\n </env:Body>\n</env:Envelope>"
+  },
+  {
+    "responseType": "SUCCESS",
+    "path": "/api/auth/login",
+    "delay": 3000,
+    "httpMethod": "POST",
+    "contentType": "REST",
+    "successStatus": 200,
+    "failureStatus": 401,
+    "successResponse": "{\n    \"message\": \"success\"\n  }",
+    "failureResponse": " {\n    \"timestamp\": \"2023-09-26T13:41:36.057+00:00\",\n    \"error\": \"something went wrong!\"\n  }"
+  },
+  {
+    "responseType": "FAILURE",
+    "contentType": "REST",
+    "path": "/api/auth/register",
+    "httpMethod": "POST",
+    "successStatus": 200,
+    "failureStatus": 401,
+    "successResponse": "{\n    \"message\": \"success\"\n  }",
+    "failureResponse": " {\n    \"timestamp\": \"2023-09-26T13:41:36.057+00:00\",\n    \"error\": \"something went wrong!\"\n  }"
+  },
+  {
+    "responseType": "RANDOM",
+    "path": "/api/user/1",
+    "httpMethod": "DELETE",
+    "successStatus": 200,
+    "contentType": "REST",
+    "failureStatus": 404,
+    "successResponse": "{\n    \"message\": \"success\"\n  }",
+    "failureResponse": " {\n    \"timestamp\": \"2023-09-26T13:41:36.057+00:00\",\n    \"error\": \"something went wrong!\"\n  }"
+  }
+]
