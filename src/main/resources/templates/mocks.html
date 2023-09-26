@@ -34,6 +34,7 @@
             <th>Content Type</th>
             <th>Response Type</th>
             <th>HTTP Method</th>
+            <th>Delay (ms)</th>
             <th>Success Status</th>
             <th>Failure Status</th>
             <th>Actions</th>
@@ -46,6 +47,7 @@
             <td th:text="${mockData.contentType}" style="text-transform: uppercase;"></td>
             <td th:text="${mockData.responseType}" style="text-transform: uppercase;"></td>
             <td th:text="${mockData.httpMethod}" style="text-transform: uppercase;"></td>
+            <td th:text="${mockData.delay}" style="text-transform: uppercase;"></td>
             <td th:text="${mockData.successStatus}" style="color: green;"></td>
             <td th:text="${mockData.failureStatus}" style="color: red;"></td>
             <td class="d-flex justify-content-center align-items-center">
@@ -105,7 +107,7 @@
     const pascalToCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
 
     function fillInputs(modalPrefix, mockData) {
-        const fields = ['Id', 'Path', 'SuccessResponse', 'FailureResponse', 'ContentType', 'ResponseType', 'HttpMethod',
+        const fields = ['Id', 'Path', 'SuccessResponse', 'FailureResponse', 'ContentType', 'ResponseType', 'HttpMethod', 'Delay',
             'SuccessStatus', 'FailureStatus', 'Created'];
 
         fields.forEach(field => {
@@ -190,6 +192,7 @@
         const path = getInputValue('createPath');
         const responseType = getInputValue('createResponseType');
         const contentType = getInputValue('createContentType');
+        const delay = getInputValue('createDelay');
         const httpMethod = getInputValue('createHttpMethod');
         const successStatus = getInputValue('createSuccessStatus');
         const failureStatus = getInputValue('createFailureStatus');
@@ -200,6 +203,7 @@
         const data = {
             path: path,
             contentType: contentType,
+            delay: delay,
             responseType: responseType,
             httpMethod: httpMethod,
             successStatus: successStatus,
@@ -233,6 +237,7 @@
         event.preventDefault();
         const id = document.getElementById('editId').value;
         const newPath = document.getElementById('editPath').value;
+        const delay = document.getElementById('editDelay').value;
         const responseType = document.getElementById('editResponseType').value;
         const contentType = document.getElementById('editContentType').value;
         const httpMethod = document.getElementById('editHttpMethod').value;
@@ -243,6 +248,7 @@
 
         const data = {
             id: id,
+            delay: delay,
             path: newPath,
             contentType: contentType,
             responseType: responseType,

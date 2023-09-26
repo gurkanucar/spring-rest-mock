@@ -2,6 +2,7 @@ package com.gucardev.springrestmock.controller;
 
 import com.gucardev.springrestmock.model.MockData;
 import com.gucardev.springrestmock.service.HandlerService;
+import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,12 @@ public class HandlerController {
   }
 
   @RequestMapping("/**")
-  public ResponseEntity<?> handleRequest(HttpServletRequest request) {
+  public ResponseEntity<?> handleRequest(HttpServletRequest request) throws InterruptedException {
     MockData mockData = handlerService.getByRequest(request);
+    long delayMillis = mockData.getDelay();
+    if (delayMillis > 0) {
+      TimeUnit.MILLISECONDS.sleep(delayMillis);
+    }
     return ResponseEntity.status(mockData.getChosenStatus())
         .contentType(mockData.getMediaType())
         .body(mockData.getChosenResponse());

@@ -58,6 +58,7 @@ public class MockDataServiceImpl implements MockDataService {
 
     if (existingMockData != null) {
       existingMockData.setPath(mockData.getPath());
+      existingMockData.setDelay(mockData.getDelay());
       existingMockData.setContentType(mockData.getContentType());
       existingMockData.setFailureStatus(mockData.getFailureStatus());
       existingMockData.setSuccessStatus(mockData.getSuccessStatus());
@@ -106,6 +107,7 @@ public class MockDataServiceImpl implements MockDataService {
         MockData.builder()
             .responseType(ResponseType.SUCCESS)
             .path("/api/auth/login")
+            .delay(3000)
             .httpMethod(HttpMethod.POST)
             .contentType(ContentType.REST)
             .successStatus(200)
@@ -142,6 +144,7 @@ public class MockDataServiceImpl implements MockDataService {
         MockData.builder()
             .responseType(ResponseType.RANDOM)
             .path("/api/user/profile")
+            .delay(5000)
             .httpMethod(HttpMethod.POST)
             .contentType(ContentType.SOAP)
             .successStatus(200)

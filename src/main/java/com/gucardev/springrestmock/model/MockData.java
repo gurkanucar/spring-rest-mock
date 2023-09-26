@@ -22,6 +22,8 @@ public class MockData {
 
   @CreationTimestamp private LocalDate created;
 
+  private long delay;
+
   @Enumerated(EnumType.STRING)
   private ResponseType responseType = ResponseType.SUCCESS;
 
