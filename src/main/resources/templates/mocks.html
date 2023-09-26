@@ -29,15 +29,15 @@
     <table class="table table-bordered table-hover table-responsive-xl">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Path</th>
-            <th>Content Type</th>
-            <th>Response Type</th>
-            <th>HTTP Method</th>
-            <th>Delay (ms)</th>
-            <th>Success Status</th>
-            <th>Failure Status</th>
-            <th>Actions</th>
+            <th class="text-center align-middle">ID</th>
+            <th class="text-center align-middle">Path</th>
+            <th class="text-center align-middle">Content Type</th>
+            <th class="text-center align-middle">Response Type</th>
+            <th class="text-center align-middle">HTTP Method</th>
+            <th class="text-center align-middle">Delay (ms)</th>
+            <th class="text-center align-middle">Success Status</th>
+            <th class="text-center align-middle">Failure Status</th>
+            <th class="text-center align-middle">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -51,6 +51,10 @@
             <td th:text="${mockData.successStatus}" style="color: green;"></td>
             <td th:text="${mockData.failureStatus}" style="color: red;"></td>
             <td class="d-flex justify-content-center align-items-center">
+                <button class="btn btn-outline-dark btn-sm ml-2"
+                        th:attr="onclick='copyCurl(\'' + ${mockData.curlCommand} + '\')'">
+                    Curl
+                </button>
                 <button class="btn btn-primary btn-sm ml-2" th:attr="onclick='openShowModal(' + ${mockData.id} + ')'">
                     Show
                 </button>
@@ -139,6 +143,12 @@
     const openCreateModal = () => {
         openModal('#createModal');
     };
+
+    const copyCurl = (curlCommand) => {
+        // alert("Curl copied to clipboard: \n " + curlCommand);
+        window.prompt("Copy to clipboard: Ctrl+C, Enter", curlCommand);
+    }
+
 
     const openEditModal = async (id) => {
         try {

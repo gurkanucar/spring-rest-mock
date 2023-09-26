@@ -3,22 +3,35 @@ package com.gucardev.springrestmock.service;
 import com.gucardev.springrestmock.model.HttpMethod;
 import com.gucardev.springrestmock.model.MockData;
 import com.gucardev.springrestmock.repository.MockDataRepository;
+import com.gucardev.springrestmock.util.CurlConverter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MockDataServiceImpl implements MockDataService {
 
   private final MockDataRepository mockDataRepository;
+  private final CurlConverter curlConverter;
 
-  public MockDataServiceImpl(MockDataRepository mockDataRepository) {
+  public MockDataServiceImpl(MockDataRepository mockDataRepository, CurlConverter curlConverter) {
     this.mockDataRepository = mockDataRepository;
+    this.curlConverter = curlConverter;
   }
 
   @Override
   public List<MockData> findAll() {
-    return mockDataRepository.findAll();
+    return mockDataRepository.findAll().stream()
+        .peek(
+            x -> {
+              try {
+                x.setCurlCommand(curlConverter.convertToCurl(x));
+              } catch (Exception e) {
+                throw new RuntimeException(e);
+              }
+            })
+        .collect(Collectors.toList());
   }
 
   @Override

@@ -47,4 +47,6 @@ public class MockData {
   @Transient private Integer chosenStatus;
 
   @Transient private MediaType mediaType = MediaType.APPLICATION_JSON;
+
+  @Transient private String curlCommand;
 }
