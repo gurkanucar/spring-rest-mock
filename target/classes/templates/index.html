@@ -7,8 +7,12 @@
     <title>Non Performing Loan</title>
     <style>
     </style>
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!--    <link rel="stylesheet"-->
+    <!--          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
 <section id="header">
@@ -22,9 +26,9 @@
 <section id="mockContainer">
     <h2 style="padding-top: 30px; padding-bottom: 20px; margin-top: 50px;" class="text-center">Welcome to Panel</h2>
     <div class="d-flex justify-content-center">
-            <div class="form-group">
-                <a th:href="@{/mocks}" class="btn btn-success btn-lg text-white">View Mock Services</a>
-            </div>
+        <div class="form-group">
+            <a th:href="@{/mocks}" class="btn btn-success btn-lg text-white">View Mock Services</a>
+        </div>
     </div>
 
 </section>
