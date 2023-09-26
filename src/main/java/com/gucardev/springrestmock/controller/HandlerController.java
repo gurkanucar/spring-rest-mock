@@ -4,6 +4,7 @@ import com.gucardev.springrestmock.model.MockData;
 import com.gucardev.springrestmock.service.HandlerService;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,8 @@ public class HandlerController {
   @RequestMapping("/**")
   public ResponseEntity<?> handleRequest(HttpServletRequest request) {
     MockData mockData = handlerService.getByRequest(request);
-    return ResponseEntity.status(mockData.getChosenStatus()).body(mockData.getChosenResponse());
+    return ResponseEntity.status(mockData.getChosenStatus())
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(mockData.getChosenResponse());
   }
 }

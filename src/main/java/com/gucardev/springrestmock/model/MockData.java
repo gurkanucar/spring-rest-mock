@@ -2,7 +2,6 @@ package com.gucardev.springrestmock.model;
 
 import java.time.LocalDate;
 import javax.persistence.*;
-
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -31,15 +30,13 @@ public class MockData {
   private Integer successStatus;
   private Integer failureStatus;
 
-  @Column(length = 2000)
+  @Column(length = 50000)
   private String successResponse;
 
-  @Column(length = 2000)
+  @Column(length = 50000)
   private String failureResponse;
 
-  @Transient
-  private String chosenResponse;
+  @Transient private String chosenResponse;
 
-  @Transient
-  private Integer chosenStatus;
+  @Transient private Integer chosenStatus;
 }
