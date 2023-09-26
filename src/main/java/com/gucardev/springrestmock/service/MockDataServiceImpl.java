@@ -1,5 +1,6 @@
 package com.gucardev.springrestmock.service;
 
+import com.gucardev.springrestmock.model.ContentType;
 import com.gucardev.springrestmock.model.HttpMethod;
 import com.gucardev.springrestmock.model.MockData;
 import com.gucardev.springrestmock.model.ResponseType;
@@ -57,6 +58,7 @@ public class MockDataServiceImpl implements MockDataService {
 
     if (existingMockData != null) {
       existingMockData.setPath(mockData.getPath());
+      existingMockData.setContentType(mockData.getContentType());
       existingMockData.setFailureStatus(mockData.getFailureStatus());
       existingMockData.setSuccessStatus(mockData.getSuccessStatus());
       existingMockData.setFailureResponse(mockData.getFailureResponse());
@@ -87,6 +89,7 @@ public class MockDataServiceImpl implements MockDataService {
         MockData.builder()
             .responseType(ResponseType.SUCCESS)
             .path("/api/entries/1")
+            .contentType(ContentType.REST)
             .httpMethod(HttpMethod.GET)
             .successStatus(200)
             .failureStatus(401)
@@ -104,6 +107,7 @@ public class MockDataServiceImpl implements MockDataService {
             .responseType(ResponseType.SUCCESS)
             .path("/api/auth/login")
             .httpMethod(HttpMethod.POST)
+            .contentType(ContentType.REST)
             .successStatus(200)
             .failureStatus(401)
             .successResponse("successResponse1")
@@ -113,6 +117,7 @@ public class MockDataServiceImpl implements MockDataService {
     mockDataList.add(
         MockData.builder()
             .responseType(ResponseType.FAILURE)
+            .contentType(ContentType.REST)
             .path("/api/auth/register")
             .httpMethod(HttpMethod.POST)
             .successStatus(200)
@@ -127,6 +132,7 @@ public class MockDataServiceImpl implements MockDataService {
             .path("/api/user/1")
             .httpMethod(HttpMethod.DELETE)
             .successStatus(200)
+            .contentType(ContentType.REST)
             .failureStatus(404)
             .successResponse("successResponse4")
             .failureResponse("failureResponse4")
@@ -134,13 +140,39 @@ public class MockDataServiceImpl implements MockDataService {
 
     mockDataList.add(
         MockData.builder()
-            .responseType(ResponseType.FAILURE)
+            .responseType(ResponseType.RANDOM)
             .path("/api/user/profile")
-            .httpMethod(HttpMethod.PUT)
+            .httpMethod(HttpMethod.POST)
+            .contentType(ContentType.SOAP)
             .successStatus(200)
             .failureStatus(401)
-            .successResponse("successResponse5")
-            .failureResponse("failureResponse5")
+            .successResponse(
+                "<soap:Envelope xmlns:soap='http://www.w3.org/2003/05/soap-envelope'>\n"
+                    + "    <soap:Body>\n"
+                    + "        <users>\n"
+                    + "            <user>\n"
+                    + "                <id>1</id>\n"
+                    + "                <name>grkn</name>\n"
+                    + "            </user>\n"
+                    + "            <user>\n"
+                    + "                <id>2</id>\n"
+                    + "                <name>ali</name>\n"
+                    + "            </user>\n"
+                    + "            <user>\n"
+                    + "                <id>3</id>\n"
+                    + "                <name>veli</name>\n"
+                    + "            </user>\n"
+                    + "        </users>\n"
+                    + "    </soap:Body>\n"
+                    + "</soap:Envelope>")
+            .failureResponse(
+                "<env:Envelope xmlns:env=http://www.w3.org/2003/05/soap-envelope>\n"
+                    + " <env:Body>\n"
+                    + " <env:Fault>\n"
+                    + " <Fault subelements>\n"
+                    + " </env:Fault>\n"
+                    + " </env:Body>\n"
+                    + "</env:Envelope>")
             .build());
 
     mockDataRepository.saveAll(mockDataList);

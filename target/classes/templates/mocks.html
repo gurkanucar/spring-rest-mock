@@ -24,6 +24,7 @@
         <tr>
             <th>ID</th>
             <th>Path</th>
+            <th>Content Type</th>
             <th>Response Type</th>
             <th>HTTP Method</th>
             <th>Success Status</th>
@@ -35,6 +36,7 @@
         <tr th:each="mockData : ${mockDataList}">
             <td th:text="${mockData.id}" style="font-weight: bold; text-align: center; color: #007bff;"></td>
             <td th:text="${mockData.path}"></td>
+            <td th:text="${mockData.contentType}" style="text-transform: uppercase;"></td>
             <td th:text="${mockData.responseType}" style="text-transform: uppercase;"></td>
             <td th:text="${mockData.httpMethod}" style="text-transform: uppercase;"></td>
             <td th:text="${mockData.successStatus}" style="color: green;"></td>
@@ -96,7 +98,7 @@
     const pascalToCamelCase = (str) => str.charAt(0).toLowerCase() + str.slice(1);
 
     function fillInputs(modalPrefix, mockData) {
-        const fields = ['Id', 'Path', 'SuccessResponse', 'FailureResponse', 'ResponseType', 'HttpMethod',
+        const fields = ['Id', 'Path', 'SuccessResponse', 'FailureResponse', 'ContentType', 'ResponseType', 'HttpMethod',
             'SuccessStatus', 'FailureStatus', 'Created'];
 
         fields.forEach(field => {
@@ -180,6 +182,7 @@
         event.preventDefault();
         const path = getInputValue('createPath');
         const responseType = getInputValue('createResponseType');
+        const contentType = getInputValue('createContentType');
         const httpMethod = getInputValue('createHttpMethod');
         const successStatus = getInputValue('createSuccessStatus');
         const failureStatus = getInputValue('createFailureStatus');
@@ -189,6 +192,7 @@
 
         const data = {
             path: path,
+            contentType: contentType,
             responseType: responseType,
             httpMethod: httpMethod,
             successStatus: successStatus,
@@ -223,6 +227,7 @@
         const id = document.getElementById('editId').value;
         const newPath = document.getElementById('editPath').value;
         const responseType = document.getElementById('editResponseType').value;
+        const contentType = document.getElementById('editContentType').value;
         const httpMethod = document.getElementById('editHttpMethod').value;
         const successStatus = document.getElementById('editSuccessStatus').value;
         const failureStatus = document.getElementById('editFailureStatus').value;
@@ -232,6 +237,7 @@
         const data = {
             id: id,
             path: newPath,
+            contentType: contentType,
             responseType: responseType,
             httpMethod: httpMethod,
             successStatus: successStatus,

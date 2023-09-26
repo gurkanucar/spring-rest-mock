@@ -19,7 +19,14 @@
                         <input type="text" class="form-control" id="editPath" required>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
+                            <label for="editContentType">Content Type:</label>
+                            <select class="form-control" id="editContentType" required>
+                                <option value="REST">REST</option>
+                                <option value="SOAP">SOAP</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
                             <label for="editResponseType">Response Type:</label>
                             <select class="form-control" id="editResponseType" required>
                                 <option value="SUCCESS">SUCCESS</option>
@@ -27,7 +34,7 @@
                                 <option value="RANDOM">RANDOM</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <label for="editHttpMethod">HTTP Method:</label>
                             <select class="form-control" id="editHttpMethod" required>
                                 <option value="GET">GET</option>
